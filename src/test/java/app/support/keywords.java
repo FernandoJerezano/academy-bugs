@@ -5,6 +5,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -53,6 +54,17 @@ public class keywords {
 	public static List<WebElement> getListOfElements(WebDriver driver, By by) {
 		List<WebElement> elements = driver.findElements(by);
 		return elements;
+	}
+	
+	public static void moveSliderLeft(WebDriver driver, By by, int offset) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebElement slider = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		Actions move = new Actions(driver);
+		move.dragAndDropBy(slider, offset, 0);
+		move.build().perform();
+		
+		System.out.println("Move slider " + by.toString() + " by an " + offset + " Offset");
+		
 	}
 	
 }
