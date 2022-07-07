@@ -1,16 +1,18 @@
+/**
+ * @Author Bernardo Salinas Jaquez
+ * @Description This script shows the happy path in creating a new account
+ * @Creation Date 07/07/2022
+ */
 package app.tsd;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -24,11 +26,11 @@ import pages.pageCreateAccount;
 public class tsdCreateAccount {
 
 	public String baseUrl = "";
-	String driverPath = "C:\\Academia2206\\libs\\webdrivers\\chromedriver-102.0.5.exe";
+	String driverPath = "";
 	String excelPath = "C:\\Academia2206\\libs\\demosite_parameters.xlsx";
 	String dataPath = "";
 	String sheetData = "";
-	private String xpathSignUpAlert = "//div[contains(@class,'alert')]";
+	String xpathUserText = "//*[@id=\"menuUserLink\"]/span";
 	public WebDriver driver;
 	excelPropertiesLoader excelData;
 
@@ -36,44 +38,23 @@ public class tsdCreateAccount {
 	public Object[][] excelDP() throws IOException {
 		// We are creating an object from the excel sheet data by calling a method that
 		// reads data from the excel stored locally in our system
-		Object[][] userObject = getExcelData(dataPath, sheetData);
+		Object[][] userObject = excelData.getExcelData(dataPath, sheetData);
 		return userObject;
 	}
 
-	public String[][] getExcelData(String fileName, String sheetName) {
-
-		String[][] data = null;
-		try {
-			FileInputStream fis = new FileInputStream(fileName);
-			XSSFWorkbook wb = new XSSFWorkbook(fis);
-			XSSFSheet sh = wb.getSheet(sheetName);
-			XSSFRow row = sh.getRow(0);
-			int noOfRows = 6;
-			int noOfCols = 2;
-			Cell cell;
-			data = new String[noOfRows - 1][noOfCols];
-			for (int i = 1; i < noOfRows; i++) {
-				for (int j = 0; j < noOfCols; j++) {
-					row = sh.getRow(i);
-					cell = row.getCell(j);
-					data[i - 1][j] = cell.getStringCellValue().toString();
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("The exception is: " + e.getMessage());
-		}
-		return data;
-	}
+	
 
 	@Test(dataProvider = "excel-data", description = "Create a new account", priority = 1)
-	public void createAnAccount(String email, String password) {
+	public void createAnAccount(String userName, String email, String password, String confirmPassword,
+			String firstName, String lastName, String phoneNumber, String country, String city, String address,
+			String state, String postalCode, String product,String category,String product1, String subject) {
 		System.out.println("Test Case Create a new Account");
 		try {
 			pageCreateAccount newAccount = new pageCreateAccount(driver);
 			driver.get(newAccount.URL);
-			newAccount.createAccount(email, password, password);
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			Assert.assertEquals(keywords.getText(driver, By.xpath(xpathSignUpAlert)), "Welcome! You have signed up successfully.");
+			newAccount.createAccount(userName,email, password, confirmPassword, firstName,lastName, phoneNumber, country,city, address,
+					state, postalCode);
+			Assert.assertEquals(keywords.getText(driver, By.xpath(xpathUserText)), userName);
 		} catch (Exception e) {
 			Assert.fail(e.getMessage());
 		}
@@ -89,13 +70,21 @@ public class tsdCreateAccount {
 		dataPath = excelData.getValue("dataPath");
 		sheetData = excelData.getValue("sheetData");
 		System.setProperty("webdriver.chrome.driver", driverPath);
-		driver = new ChromeDriver();
+		ChromeOptions options= new ChromeOptions();
+	    // add Incognito parameter
+	    options.addArguments("--incognito");
+	    // DesiredCapabilities object
+	    DesiredCapabilities c = DesiredCapabilities.chrome();
+	    //set capability to browser
+	    c.setCapability(ChromeOptions.CAPABILITY, options);
+	      
+		driver = new ChromeDriver(options);
 		driver.get(baseUrl);
 	}
 
 	@AfterClass
 	public void afterClass() {
-		driver.close();
+		//driver.close();
 	}
 	
 }

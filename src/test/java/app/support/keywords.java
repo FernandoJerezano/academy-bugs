@@ -19,7 +19,7 @@ public class keywords {
 	}
 
 	public static void clickElement(WebDriver driver, By by) {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by));
 		element.click();
 		System.out.println("Click on " + by.toString());
