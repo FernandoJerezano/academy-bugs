@@ -1,10 +1,6 @@
 package app.tsd;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -12,7 +8,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import pages.pageSearchByCategory;
-
+/**
+ * Author: Fernando Rafael Jerezano Balderas
+ * Script description: In this script we define and run the diferent test cases 
+ * 	and use the methods defined in the pageSearchByCategory class 
+ * Creation date: 07/07/2022
+ * Modification date: 07/07/2022
+ * */
 public class tsdPageSearchByCategory {
 
 	public String baseUrl = "https://www.advantageonlineshopping.com/#/";
