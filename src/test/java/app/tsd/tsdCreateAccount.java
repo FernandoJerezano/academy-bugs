@@ -31,6 +31,7 @@ public class tsdCreateAccount {
 	String dataPath = "";
 	String sheetData = "";
 	String xpathUserText = "//*[@id=\"menuUserLink\"]/span";
+	String xpathAccountCreated = "//label[@class='center block smollMargin invalid']";
 	public WebDriver driver;
 	excelPropertiesLoader excelData;
 
@@ -55,6 +56,22 @@ public class tsdCreateAccount {
 			newAccount.createAccount(userName,email, password, confirmPassword, firstName,lastName, phoneNumber, country,city, address,
 					state, postalCode);
 			Assert.assertEquals(keywords.getText(driver, By.xpath(xpathUserText)), userName);
+		} catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+	
+	@Test(dataProvider = "excel-data", description = "Try to create a new account", priority = 1)
+	public void tryToCreateAnAccount(String userName, String email, String password, String confirmPassword,
+			String firstName, String lastName, String phoneNumber, String country, String city, String address,
+			String state, String postalCode, String product,String category,String product1, String subject) {
+		System.out.println("Test Case Try to create a new Account");
+		try {
+			pageCreateAccount newAccount = new pageCreateAccount(driver);
+			driver.get(newAccount.URL);
+			newAccount.createAccount(userName,email, password, confirmPassword, firstName,lastName, phoneNumber, country,city, address,
+					state, postalCode);
+			Assert.assertEquals(keywords.getText(driver, By.xpath(xpathAccountCreated)), "User name already exists");
 		} catch (Exception e) {
 			Assert.fail(e.getMessage());
 		}

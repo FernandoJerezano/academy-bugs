@@ -53,7 +53,7 @@ public class excelPropertiesLoader {
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheet(sheetName);
 			XSSFRow row = sh.getRow(0);
-			int noOfRows = 11;
+			int noOfRows = 10;
 			int noOfCols = 16;
 			Cell cell;
 			data = new String[noOfRows - 1][noOfCols];
