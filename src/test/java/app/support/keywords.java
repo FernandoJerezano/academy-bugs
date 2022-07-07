@@ -56,13 +56,19 @@ public class keywords {
 		return elements;
 	}
 	
+	/*
+	 * In this method we get the slider and then we start moving it's left side by a given offet
+	 * parameters:
+	 * 	driver: web driver we are currently using
+	 * 	by: the xpath we use to get the web element
+	 * 	offset: the offset we use to move the slider
+	 * */  
 	public static void moveSliderLeft(WebDriver driver, By by, int offset) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		WebElement slider = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 		Actions move = new Actions(driver);
 		move.dragAndDropBy(slider, offset, 0);
 		move.build().perform();
-		
 		System.out.println("Move slider " + by.toString() + " by an " + offset + " Offset");
 		
 	}
