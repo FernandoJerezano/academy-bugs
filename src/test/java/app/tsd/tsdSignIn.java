@@ -40,11 +40,13 @@ public class tsdSignIn {
 	@Test(dataProvider = "excel-data", description = "User's sign in", priority = 1)
 	public void userSignin(String userName, String password) {
 		System.out.println("Test Case Sign in");
-		try {
-			pageSignIn signIn = new pageSignIn(driver);
-			String userNameObtained = signIn.userSignIn(userName, password);		
+		pageSignIn signIn = new pageSignIn(driver);
+		try {		
+			String userNameObtained = signIn.userSignIn(userName, password);
+			signIn.userSignOut();
 			Assert.assertEquals(userNameObtained, userName);
 		} catch (Exception e) {
+			signIn.closePopup();
 			Assert.fail(e.getMessage());
 		}
 	}
