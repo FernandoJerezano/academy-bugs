@@ -35,10 +35,13 @@ public class pageSignIn extends pageTemplate {
 	}
 	//Steps to user's sign in
 	public String userSignIn(String username, String password) {
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		goToSignInPopup();
 		keywords.writeElement(driver, By.xpath(xpathUserName), username);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.writeElement(driver, By.xpath(xpathUserPassword), password);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xpathSignIn));
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		return keywords.getText(driver, By.xpath(xpathNameOfUser));
 	}
 	//Steps to user's sign out
@@ -51,7 +54,7 @@ public class pageSignIn extends pageTemplate {
 	public String userSignInWithFacebook() {
 		goToSignInPopup();
 		keywords.clickElement(driver, By.xpath(xpathSignInFacebook));
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
 		return keywords.getText(driver, By.xpath(xpathFacebookSignInResponse));
 	}
 	
