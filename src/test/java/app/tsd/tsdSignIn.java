@@ -31,7 +31,7 @@ public class tsdSignIn {
 	public Object[][] excelDP() throws IOException {
 		// We are creating an object from the excel sheet data by calling a method that
 		// reads data from the excel stored locally in our system
-		Object[][] userObject = excelData.getExcelDataSignIn(dataPath, sheetData);
+		Object[][] userObject = excelData.getExcelData(dataPath, sheetData);
 		return userObject;
 	}
 
