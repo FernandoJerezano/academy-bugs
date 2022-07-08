@@ -51,6 +51,12 @@ public class keywords {
 		select.selectByValue(value);
 		System.out.println("Select element " + by.toString() + " with " + value);
 	}
+	
+	public static void selectElementByName(WebDriver driver, By by, String value) {
+		Select select = new Select(driver.findElement(by));
+		select.selectByVisibleText(value);
+		System.out.println("Select element " + by.toString() + " with " + value);
+	}
 
 	public static List<WebElement> getListOfElements(WebDriver driver, By by) {
 		List<WebElement> elements = driver.findElements(by);
