@@ -25,7 +25,7 @@ public class pageSignIn extends pageTemplate {
 	private String xpathNameOfUser = "//*[@id='menuUserLink']/span";
 	private String xpathSignOut = "//*[@id='loginMiniTitle']/label[3]";
 	private String xpathSignInFacebook = "//span[@class = 'facebook ng-scope']";
-	private String xpathFacebookSignInResponse = "//*[@id='signInResultMessage'and @class ='or center invalid']";
+	private String xpathFacebookSignInResponse = "//*[@id='signInResultMessage' and @class ='or center invalid']";
 	private String xpathForgotPassword = "//a[@class = 'forgot-Passwowd ng-scope']";
 	private String xpathClosePopup = "//div[@class= 'closeBtn loginPopUpCloseBtn']";
 	
@@ -58,17 +58,16 @@ public class pageSignIn extends pageTemplate {
 		goToSignInPopup();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xpathSignInFacebook));
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 		return keywords.getText(driver, By.xpath(xpathFacebookSignInResponse));
 	}
 	
-	// Steps to reset password
+
 	public void resetPassword() {
 		goToSignInPopup();
 		keywords.clickElement(driver, By.xpath(xpathForgotPassword));
 		
 	}
-	
+
 	public void closePopup() {
 		keywords.clickElement(driver, By.xpath(xpathClosePopup));
 	}
