@@ -48,8 +48,14 @@ public class pageSearchByCategory extends pageTemplate {
 	private String xPathCategoryHeader = "//*[contains(@class,'categoryTitle')]";
 	private String xPathSlider = "//*[@id='slider']";
 	
+	private String xPathProductList = "//div[@class='cell categoryRight']/ul/li";
+	
 	// here we store the name of the category
 	private String categoryName;
+	
+	// here we store the number of products before and after filtering
+	private int numberOfElementsBeforeFilter;
+	private int numberOfElementsAfterFilter;
 	
 	public pageSearchByCategory(WebDriver driver) {
 		super(driver);
@@ -62,6 +68,8 @@ public class pageSearchByCategory extends pageTemplate {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathLaptopCategory));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsBeforeFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathOptionPrice));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.moveSliderLeft(driver, By.xpath(xPathSlider), 5);
@@ -71,13 +79,17 @@ public class pageSearchByCategory extends pageTemplate {
 		keywords.moveSliderLeft(driver, By.xpath(xPathSlider), 1);
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.moveSliderLeft(driver, By.xpath(xPathSlider), 20);
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsAfterFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
 	}
 	
 	// we select the Weight section and start clicking on some check boxes
 	public void filterByWeight() {
 		
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		keywords.clickElement(driver, By.xpath(xPathLaptopMice));
+		keywords.clickElement(driver, By.xpath(xPathLaptopCategory));
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsBeforeFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathOptionWeight));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -86,6 +98,8 @@ public class pageSearchByCategory extends pageTemplate {
 		keywords.clickElement(driver, By.xpath(xPathCbxLaptopWeight3));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathCbxLaptopWeight6));
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsAfterFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
 	}
 	
 	// we select the Color section and start selecting some color options
@@ -94,6 +108,8 @@ public class pageSearchByCategory extends pageTemplate {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathLaptopCategory));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsBeforeFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathOptionColor));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathColorRed));
@@ -101,6 +117,8 @@ public class pageSearchByCategory extends pageTemplate {
 		keywords.clickElement(driver, By.xpath(xPathColorGrey));
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		keywords.clickElement(driver, By.xpath(xPathColorPurple));
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		numberOfElementsAfterFilter = keywords.getListOfElements(driver, By.xpath(xPathProductList)).size();
 	}
 	
 	// we select the highlighted product
@@ -123,6 +141,14 @@ public class pageSearchByCategory extends pageTemplate {
 	// accessor method to get the category's name
 	public String getCategoryName() {
 		return categoryName;
+	}
+	
+	public int getNumberOfElementsBeforeFilter() {
+		return numberOfElementsBeforeFilter;
+	}
+
+	public int getNumberOfElementsAfterFilter() {
+		return numberOfElementsAfterFilter;
 	}
 		
 }

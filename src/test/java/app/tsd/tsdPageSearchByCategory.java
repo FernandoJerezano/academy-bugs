@@ -25,8 +25,17 @@ public class tsdPageSearchByCategory {
 	
 	@Test
 	public void filterByPrice() {
-		pageSearchByCategory searchByCategory = new pageSearchByCategory(driver);
-		searchByCategory.filterByPrice();
+		
+		try {
+			pageSearchByCategory searchByCategory = new pageSearchByCategory(driver);
+			searchByCategory.filterByPrice();
+			
+			Assert.assertNotEquals(searchByCategory.getNumberOfElementsBeforeFilter(), 
+					searchByCategory.getNumberOfElementsAfterFilter());
+			
+		}catch(Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 	
 	@Test
@@ -34,6 +43,9 @@ public class tsdPageSearchByCategory {
 		try {
 			pageSearchByCategory searchByCategory = new pageSearchByCategory(driver);
 			searchByCategory.filterByWeight();
+			
+			Assert.assertNotEquals(searchByCategory.getNumberOfElementsBeforeFilter(), 
+					searchByCategory.getNumberOfElementsAfterFilter());
 		}catch(Exception e) {
 			Assert.fail(e.getMessage());
 		}
@@ -44,6 +56,9 @@ public class tsdPageSearchByCategory {
 		try {
 			pageSearchByCategory searchByCategory = new pageSearchByCategory(driver);
 			searchByCategory.filterByColor();
+			
+			Assert.assertNotEquals(searchByCategory.getNumberOfElementsBeforeFilter(), 
+					searchByCategory.getNumberOfElementsAfterFilter());
 		}catch(Exception e) {
 			Assert.fail(e.getMessage());
 		}
