@@ -1,8 +1,3 @@
-/**
- * @Author Bernardo Salinas Jaquez
- * @Description This script shows the happy path in creating a new account
- * @Creation Date 07/07/2022
- */
 package app.tsd;
 
 
@@ -22,7 +17,13 @@ import org.testng.annotations.Test;
 import app.support.excelPropertiesLoader;
 import app.support.keywords;
 import pages.pageCreateAccount;
-
+/**
+ * Author: Bernardo Salinas Jaquez
+ * Script description: In this script we define and run the different test cases for the create an account scenario
+ * 	and use the methods defined in the pageCreateAccount class 
+ * Creation date: 07/07/2022
+ * Modification date: 07/07/2022
+ * */
 public class tsdCreateAccount {
 
 	public String baseUrl = "";
@@ -35,6 +36,7 @@ public class tsdCreateAccount {
 	public WebDriver driver;
 	excelPropertiesLoader excelData;
 
+	//Definition of the data provider to work with the data in the create account scenario
 	@DataProvider(name = "excel-data")
 	public Object[][] excelDP() throws IOException {
 		// We are creating an object from the excel sheet data by calling a method that
@@ -44,7 +46,7 @@ public class tsdCreateAccount {
 	}
 
 	
-
+	//Test case for create a new account in the happy path where a new user creates a new account
 	@Test(dataProvider = "excel-data", description = "Create a new account", priority = 1)
 	public void createAnAccount(String userName, String email, String password, String confirmPassword,
 			String firstName, String lastName, String phoneNumber, String country, String city, String address,
@@ -61,6 +63,7 @@ public class tsdCreateAccount {
 		}
 	}
 	
+	//Test case for create a new account in scenario when the user tries to create an account already registered
 	@Test(dataProvider = "excel-data", description = "Try to create a new account", priority = 1)
 	public void tryToCreateAnAccount(String userName, String email, String password, String confirmPassword,
 			String firstName, String lastName, String phoneNumber, String country, String city, String address,
@@ -101,7 +104,7 @@ public class tsdCreateAccount {
 
 	@AfterClass
 	public void afterClass() {
-		//driver.close();
+		driver.close();
 	}
 	
 }

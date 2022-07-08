@@ -14,10 +14,18 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+/**
+ * Author: Bernardo Salinas Jaquez
+ * Script description: In this script we define the functions to read de .xlsx files that contains our parameters and
+ * the file that contains our test data 
+ * Creation date: 07/07/2022
+ * Modification date: 08/07/2022
+ * */
 
 public class excelPropertiesLoader {
 	private Dictionary<String, String> dic;
 
+	//Load the parameters file and save it in a dictionary to use it in our test cases
 	public void LoadFile(String rutaArchivoExcel) {
 		try {
 			FileInputStream inputStream = new FileInputStream(new File(rutaArchivoExcel));
@@ -45,6 +53,7 @@ public class excelPropertiesLoader {
 		return dic.get(key);
 	}
 	
+	//Function to load the data file to use it after in any dataprovider needed in our test cases
 	public String[][] getExcelData(String fileName, String sheetName) {
 
 		String[][] data = null;
@@ -53,10 +62,10 @@ public class excelPropertiesLoader {
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheet(sheetName);
 			XSSFRow row = sh.getRow(0);
-			int noOfRows = 10;
-			int noOfCols = 16;
+			int noOfRows = sh.getLastRowNum() + 1; // Add 1 because the functions doesn't detect the last row 
+	  	   	int noOfCols = row.getLastCellNum();
 			Cell cell;
-			data = new String[noOfRows - 1][noOfCols];
+			data = new String[noOfRows - 1][noOfCols - 1];
 			for (int i = 1; i < noOfRows; i++) {
 				for (int j = 1; j < noOfCols; j++) {
 					row = sh.getRow(i);
