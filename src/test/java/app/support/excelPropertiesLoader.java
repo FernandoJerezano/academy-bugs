@@ -70,6 +70,31 @@ public class excelPropertiesLoader {
 		return data;
 	}
 	
+	public String[][] getExcelDataSignIn(String fileName, String sheetName) {
+
+		String[][] data = null;
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sh = wb.getSheet(sheetName);
+			XSSFRow row = sh.getRow(0);
+			int noOfRows = 1;
+			int noOfCols = 2;
+			Cell cell;
+			data = new String[noOfRows - 1][noOfCols];
+			for (int i = 1; i < noOfRows; i++) {
+				for (int j = 1; j < noOfCols; j++) {
+					row = sh.getRow(i);
+					cell = row.getCell(j);
+					data[i - 1][j - 1] = cell.getStringCellValue().toString();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("The exception is: " + e.getMessage());
+		}
+		return data;
+	}
+	
 	
 	
 }
